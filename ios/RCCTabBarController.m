@@ -146,7 +146,7 @@
         UIImage *iconImage = nil;
         id icon = tabItemLayout[@"props"][@"icon"];
         if (icon) {
-            iconImage = [RCTConvert UIImage:icon];
+            iconImage = [[RCTConvert UIImage:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
             if (buttonColor) {
                 iconImage = [[self image:iconImage withColor:buttonColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
             }
@@ -156,7 +156,7 @@
         if (selectedIcon) {
             iconImageSelected = [RCTConvert UIImage:selectedIcon];
         } else {
-            iconImageSelected = [RCTConvert UIImage:icon];
+            iconImageSelected = [[RCTConvert UIImage:icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         }
         
         viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
