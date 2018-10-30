@@ -54,7 +54,7 @@ dependencies {
     compile "com.facebook.react:react-native:+"
 
     // third party
-    compile "com.whhotw:ahbottomnavigation:937bf31f8e"
+    compile "com.github.whhotw:ahbottomnavigation:937bf31f8e"
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 
     // tests
