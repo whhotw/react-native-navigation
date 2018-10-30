@@ -1,5 +1,7 @@
 package com.reactnativenavigation.bridge;
 
+import android.support.annotation.Nullable;
+
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -7,6 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.reactnativenavigation.controllers.NavigationActivity;
 import com.reactnativenavigation.controllers.NavigationCommandsHandler;
 import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.FabParams;
@@ -51,9 +54,15 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
         return NAME;
     }
 
+    @Override
+    public void onCatalystInstanceDestroy() {
+        super.onCatalystInstanceDestroy();
+        NavigationActivity.onCatalystInstanceDestroy();
+    }
+
     @ReactMethod
-    public void startApp(final ReadableMap params) {
-        NavigationCommandsHandler.startApp(BundleConverter.toBundle(params));
+    public void startApp(final ReadableMap params, final @Nullable Promise promise) {
+        NavigationCommandsHandler.startApp(BundleConverter.toBundle(params), promise);
     }
 
     @ReactMethod
@@ -176,8 +185,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void push(final ReadableMap params) {
-        NavigationCommandsHandler.push(BundleConverter.toBundle(params));
+    public void push(final ReadableMap params, Promise onPushComplete) {
+        NavigationCommandsHandler.push(BundleConverter.toBundle(params), onPushComplete);
     }
 
     @ReactMethod
@@ -212,13 +221,13 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismissAllModals() {
-        NavigationCommandsHandler.dismissAllModals();
+    public void dismissAllModals(Promise promise) {
+        NavigationCommandsHandler.dismissAllModals(promise);
     }
 
     @ReactMethod
-    public void dismissTopModal(final ReadableMap params) {
-        NavigationCommandsHandler.dismissTopModal(ScreenParamsParser.parse(BundleConverter.toBundle(params)));
+    public void dismissTopModal(final ReadableMap params, Promise promise) {
+        NavigationCommandsHandler.dismissTopModal(ScreenParamsParser.parse(BundleConverter.toBundle(params)), promise);
     }
 
     @ReactMethod
@@ -273,5 +282,10 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getCurrentlyVisibleScreenId(Promise promise) {
         NavigationCommandsHandler.getCurrentlyVisibleScreenId(promise);
+    }
+
+    @ReactMethod
+    public void getLaunchArgs(Promise promise) {
+        NavigationCommandsHandler.getLaunchArgs(promise);
     }
 }
